@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Heading = () => {
   return (
     <div className="container">
@@ -11,29 +13,24 @@ const Heading = () => {
 
         <ul className="nav nav-pills">
           <li className="nav-item">
-            <a href="/cars" className="nav-link" aria-current="page">
+            <Link to="/cars" className="nav-link" aria-current="page">
               Cars
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="/signin" className="nav-link">
+            <Link to="/add" className="nav-link">
+              Add Car
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/signin" className="nav-link">
               Sign in
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="/signup" className="nav-link">
+            <Link to="/signup" className="nav-link">
               Sign up
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link">
-              FAQs
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link">
-              About
-            </a>
+            </Link>
           </li>
         </ul>
       </header>

@@ -1,32 +1,51 @@
-const ShowCars = ({ cars }) => {
+import { useState, useEffect } from "react";
+import { getCars } from "../service/carService";
+import { Link } from "react-router-dom";
+
+const ShowCars = () => {
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    getCars().then(({ data }) => setCars(data));
+  }, []);
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>Max Speed</th>
-            <th>Automatic</th>
-            <th>Engine</th>
-            <th>Doors</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cars?.cars.map((car, index) => {
-            <tr key={index}>
-              <td>{car.brand}</td>
-              <td>{car.model}</td>
-              <td>{car.year}</td>
-              <td>{car.maxSpeed}</td>
-              <td>{car.isAutomatic}</td>
-              <td>{car.engine}</td>
-              <td>{car.numberOfDoors}</td>
-            </tr>;
-          })}
-        </tbody>
-      </table>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <table
+          className="table table-striped table-hover"
+          style={{ width: "300px", textAlign: "center" }}
+        >
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Brand</th>
+              <th>Year</th>
+              <th>Max speed</th>
+              <th>Automatic</th>
+              <th>Engine</th>
+              <th>No of doors</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cars.map((car, id) => (
+              <tr key={id}>
+                <td>{car.model}</td>
+                <td>{car.brand}</td>
+                <td>{car.year}</td>
+                <td>{car.maxSpeed}</td>
+                <td>{car.isAutomatic ? "Yes" : "No"}</td>
+                <td>{car.engine}</td>
+                <td>{car.numberOfDoors}</td>
+                <td>
+                  <Link to={`edit/${car.id}`}>Edit</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

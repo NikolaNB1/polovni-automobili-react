@@ -30,36 +30,36 @@ const SignIn = () => {
         className="container "
         style={{ width: "500px" }}
       >
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
-        <div class="form-floating">
+        <div className="form-floating">
           <input
             type="email"
-            class="form-control"
+            className="form-control"
             id="floatingInput"
             placeholder="name@example.com"
             name="email"
             value={user.email}
             onChange={handelInputChange}
           />
-          <label for="floatingInput">Email address</label>
+          <label htmlFor="floatingInput">Email address</label>
         </div>
-        <div class="form-floating">
+        <div className="form-floating">
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             id="floatingPassword"
             name="password"
             value={user.password}
             onChange={handelInputChange}
             placeholder="Password"
           />
-          <label for="floatingPassword">Password</label>
+          <label htmlFor="floatingPassword">Password</label>
         </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">
+        <button className="btn btn-primary w-100 py-2" type="submit">
           Sign in
         </button>
-        <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
+        <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
       </form>
     </div>
   );

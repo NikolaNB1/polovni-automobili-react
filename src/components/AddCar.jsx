@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import CarsContext from "../storage/CarsContext";
+import { useState } from "react";
 import { addCar } from "../service/carService";
 
 let years = [];
@@ -9,22 +8,29 @@ for (let i = 1990; i <= 2018; i++) {
 }
 
 const AddCar = () => {
-  const [car, setCar] = useState({});
+  const [car, setCar] = useState({
+    brand: "",
+    model: "",
+    year: "",
+    maxSpeed: 0,
+    isAutomatic: false,
+    engine: "",
+    numberOfDoors: 0,
+  });
+  const [isAutomatic, setIsAutomatic] = useState(false);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
     setCar((prevState) => {
       return { ...prevState, [name]: value };
     });
   };
-  const handleCheckChange = (event) => {
-    const { name, checked } = event.target;
 
-    setCar((prevState) => {
-      return { ...prevState, [name]: checked };
-    });
+  const handleChecked = () => {
+    setIsAutomatic(!isAutomatic);
   };
-  const submitHandler = (event) => {
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     console.log(car);
     addCar(
@@ -33,7 +39,7 @@ const AddCar = () => {
       car.year,
       car.maxSpeed,
       car.numberOfDoors,
-      car.isAutomatic,
+      isAutomatic,
       car.engine
     );
     setCar({
@@ -42,49 +48,49 @@ const AddCar = () => {
       year: 1990,
       maxSpeed: 0,
       numberOfDoors: 0,
-      isAutomatic: false,
+      isAutomatic: isAutomatic,
       engine: "",
     });
   };
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <form onSubmit={submitHandler}>
-        <h1 className="h3 mb-3 fw-normal">Add A Car</h1>
-
-        <div className="form-floating">
+    <div>
+      <form
+        className="container mt-5"
+        style={{ width: "300px" }}
+        onSubmit={(event) => handleSubmit(event, car)}
+      >
+        <div className="form-floating mt-3">
           <input
-            onChange={(e) => handleInputChange(e)}
             name="brand"
+            value={car.brand}
             type="text"
             className="form-control"
-            id="floatingInput"
-            placeholder="Enter Brand"
-            value={car.brand}
+            onChange={handleInputChange}
+            placeholder="brand"
           />
-          <label for="floatingInput">Brand</label>
+          <label htmlFor="brand">Brand</label>
         </div>
-        <div className="form-floating">
+        <div className="form-floating mt-3">
           <input
             name="model"
             value={car.model}
-            onChange={(e) => handleInputChange(e)}
             type="text"
             className="form-control"
-            id="floatingPassword"
-            placeholder="Model"
+            onChange={handleInputChange}
+            placeholder="model"
           />
-          <label for="floatingPassword">Model</label>
+          <label htmlFor="model">Model</label>
         </div>
-
-        <div className="form-floating">
+        <div className="form-floating mt-3">
           <select
-            name="year"
-            value={car.year}
-            onChange={(e) => handleInputChange(e)}
             className="form-control"
-            id="floatingPassword"
-            placeholder="Year"
+            name="year"
+            onChange={handleInputChange}
+            value={car.year}
           >
+            <option disabled defaultValue value="">
+              Select year:
+            </option>
             {years.map((year, index) => {
               return (
                 <option key={index} value={year}>
@@ -93,81 +99,93 @@ const AddCar = () => {
               );
             })}
           </select>
-          <label for="floatingPassword">Year</label>
+          <label htmlFor="year">Year</label>
         </div>
-        <div className="form-floating">
+        <div className="form-floating mt-3">
           <input
             name="maxSpeed"
             value={car.maxSpeed}
-            onChange={(e) => handleInputChange(e)}
+            onChange={handleInputChange}
             type="number"
             className="form-control"
-            id="floatingPassword"
-            placeholder="Max Speed"
+            placeholder="Max speed"
           />
-          <label for="floatingPassword">Max Speed</label>
+          <label htmlFor="maxSpeed">Max Speed</label>
         </div>
-        <div className="form-floating">
+        <div className="form-check mt-3">
           <input
-            name="isAutomatic"
-            checked={car.isAutomatic}
-            value={car.isAutomatic}
-            onChange={(e) => handleCheckChange(e)}
+            className="form-check-input"
             type="checkbox"
-            id="floatingPassword"
-            placeholder="Is Automatic"
-            // checked={}
-            // onChange={}
+            checked={isAutomatic}
+            onChange={handleChecked}
+            name="isAutomatic"
+            value={car.isAutomatic}
           />
-          <label for="floatingPassword">Is Automatic</label>
+          <label htmlFor="isAutomatic">Automatic</label>
         </div>
-        <label>Engine</label>
+        <label htmlFor="engine">Engine:</label>
         <div>
           <div>
             <input
-              value="diesel"
-              onChange={(e) => handleInputChange(e)}
               type="radio"
-              className=""
               name="engine"
+              value="diesel"
+              id="diesel"
+              onChange={handleInputChange}
             />
             <label htmlFor="diesel">Diesel</label>
           </div>
           <div>
             <input
               type="radio"
-              value="petrol"
               name="engine"
-              onChange={(e) => handleInputChange(e)}
+              value="petrol"
+              id="petrol"
+              onChange={handleInputChange}
             />
-            <label htmlFor="diesel">Petrol</label>
+            <label htmlFor="petrol">Petrol</label>
           </div>
           <div>
             <input
               type="radio"
-              value="electric"
               name="engine"
-              onChange={(e) => handleInputChange(e)}
+              value="electric"
+              id="electric"
+              onChange={handleInputChange}
             />
-            <label htmlFor="diesel">Electric</label>
+            <label htmlFor="electric">Electric</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="engine"
+              value="hybrid"
+              id="hybrid"
+              onChange={handleInputChange}
+            />
+            <label htmlFor="hybrid">Hybrid</label>
           </div>
         </div>
-        <div className="form-floating">
+        <div className="form-floating mt-3">
           <input
-            onChange={(e) => handleInputChange(e)}
             name="numberOfDoors"
             value={car.numberOfDoors}
+            onChange={handleInputChange}
             type="number"
             className="form-control"
-            id="floatingPassword"
-            placeholder="Number of Doors"
           />
-          <label for="floatingPassword">Number of Doors</label>
+          <label>Number of doors</label>
         </div>
-        <button className="btn btn-primary w-100 py-2" type="submit">
-          Add Car
+        <button
+          className="w-100 btn btn-lg btn-success mt-3"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          Add
         </button>
-        <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
+        <p className="mt-5 mb-3 text-body-secondary">
+          &copy; Vivify academy 2023
+        </p>
       </form>
     </div>
   );

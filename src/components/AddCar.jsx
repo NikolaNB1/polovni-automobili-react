@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { addCar } from "../service/carService";
+import UserContext from "../storage/UserContext";
 
 let years = [];
 
@@ -8,6 +10,15 @@ for (let i = 1990; i <= 2018; i++) {
 }
 
 const AddCar = () => {
+  const { signedIn } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!signedIn) {
+      navigate("/signin");
+    }
+  });
+
   const [car, setCar] = useState({
     brand: "",
     model: "",

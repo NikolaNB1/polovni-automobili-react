@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
-import { getCars } from "../service/carService";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import CarsContext from "../storage/CarsContext";
 
 const ShowCars = () => {
-  const [cars, setCars] = useState([]);
-
-  useEffect(() => {
-    getCars().then(({ data }) => setCars(data));
-  }, []);
+  const { cars } = useContext(CarsContext);
 
   return (
     <div>
@@ -29,7 +25,7 @@ const ShowCars = () => {
             </tr>
           </thead>
           <tbody>
-            {cars.map((car, id) => (
+            {cars?.map((car, id) => (
               <tr key={id}>
                 <td>{car.model}</td>
                 <td>{car.brand}</td>

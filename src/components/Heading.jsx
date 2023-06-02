@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../storage/UserContext";
 
 const Heading = () => {
+  const { user } = useContext(UserContext);
   return (
     <div className="container">
       <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -22,16 +25,22 @@ const Heading = () => {
               Add Car
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/signin" className="nav-link">
-              Sign in
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/signup" className="nav-link">
-              Sign up
-            </Link>
-          </li>
+          {user.id ? (
+            <></>
+          ) : (
+            <>
+              <li className="nav-item">
+                <Link to="/signin" className="nav-link">
+                  Sign in
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/signup" className="nav-link">
+                  Sign up
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </header>
     </div>

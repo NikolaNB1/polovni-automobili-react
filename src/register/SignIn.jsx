@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../storage/UserContext";
 import { logIn } from "../service/carService";
 
 const SignIn = () => {
@@ -7,9 +8,12 @@ const SignIn = () => {
     password: "",
   });
 
+  const { signInUser } = useContext(UserContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    logIn(user.email, user.password);
+    logIn(user.email, user.password).then(({ data }) => signInUser(data));
+
     setUser({
       email: "",
       password: "",

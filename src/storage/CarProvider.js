@@ -11,9 +11,13 @@ const CarProvider = ({ children }) => {
   }, []);
 
   const postNewCar = (car) => {
-    addCar(car).then(({ data }) =>
-      setCarState((prevState) => [...prevState, data])
-    );
+    const existingCar = carState.find((c) => c.brand === car.brand);
+    if (existingCar) {
+      return;
+    }
+    addCar(car).then(({ data }) => {
+      setCarState((prevState) => [...prevState, data]);
+    });
   };
 
   const carContext = {

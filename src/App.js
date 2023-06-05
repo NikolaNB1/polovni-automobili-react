@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import ShowCars from "./components/ShowCars";
 import CarsContext from "./storage/CarsContext";
@@ -15,6 +15,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/cars" />}></Route>
       <Route
         index
         path="/cars"

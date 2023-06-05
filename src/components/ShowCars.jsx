@@ -25,20 +25,22 @@ const ShowCars = () => {
             </tr>
           </thead>
           <tbody>
-            {cars?.map((car, id) => (
-              <tr key={id}>
-                <td>{car.model}</td>
-                <td>{car.brand}</td>
-                <td>{car.year}</td>
-                <td>{car.maxSpeed}</td>
-                <td>{car.isAutomatic ? "Yes" : "No"}</td>
-                <td>{car.engine}</td>
-                <td>{car.numberOfDoors}</td>
-                <td>
-                  <Link to={`edit/${car.id}`}>Edit</Link>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(cars)
+              ? cars.map((car, id) => (
+                  <tr key={id}>
+                    <td>{car.model}</td>
+                    <td>{car.brand}</td>
+                    <td>{car.year}</td>
+                    <td>{car.maxSpeed}</td>
+                    <td>{car.isAutomatic ? "Yes" : "No"}</td>
+                    <td>{car.engine}</td>
+                    <td>{car.numberOfDoors}</td>
+                    <td>
+                      <Link to={`edit/${car.id}`}>Edit</Link>
+                    </td>
+                  </tr>
+                ))
+              : null}
           </tbody>
         </table>
       </div>

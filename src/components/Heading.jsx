@@ -1,18 +1,44 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../storage/UserContext";
+import BrandModal from "../modals/BrandModal";
+import CarsContext from "../storage/CarsContext";
 
 const Heading = () => {
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [filteredModels, setFilteredModels] = useState([]);
+
+  const { cars } = useContext(CarsContext);
+
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (selectedBrand) {
+      const filtered = cars.filter((car) => car.brand === selectedBrand);
+      setFilteredModels(filtered);
+    } else {
+      setFilteredModels(cars);
+    }
+  }, [selectedBrand, cars]);
+
   return (
     <div className="container">
       <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a
+        <Link
           href="/"
           className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
           <span className="fs-4">Polovni automobili</span>
-        </a>
+        </Link>
+        <ul className="nav nav-pills align-self-center">
+          <li className="nav-item">
+            <BrandModal
+              selectedBrand={selectedBrand}
+              setSelectedBrand={setSelectedBrand}
+              filteredModels={filteredModels}
+            />
+          </li>
+        </ul>
 
         <ul className="nav nav-pills">
           <li className="nav-item">

@@ -24,6 +24,7 @@ function App() {
       <Route path="/add" element={<AddCar />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
+      <Route path="/cars/edit/:id" element={<AddCar />}></Route>
     </Routes>
   );
 }

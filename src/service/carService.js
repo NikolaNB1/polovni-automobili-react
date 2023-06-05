@@ -40,3 +40,11 @@ export const logIn = (email, password) => {
     password,
   });
 };
+
+export const getCarById = (id) => {
+  return API.get(`/cars/${id}`);
+};
+
+export const editCarById = (id, car) => {
+  return API.patch(`/cars/${id}`, car);
+};

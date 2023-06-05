@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { addCar } from "../service/carService";
+import { useNavigate, useParams } from "react-router-dom";
+import { addCar, editCarById, getCarById } from "../service/carService";
 import UserContext from "../storage/UserContext";
 
 let years = [];
@@ -13,11 +13,19 @@ const AddCar = () => {
   const { signedIn } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
   useEffect(() => {
     if (!signedIn) {
       navigate("/signin");
     }
-  });
+    if (id) {
+      getCarById(id).then(({ data }) => {
+        setCar(data);
+        console.log(data);
+      });
+    }
+  }, [id]);
 
   const [car, setCar] = useState({
     brand: "",
@@ -53,15 +61,19 @@ const AddCar = () => {
       isAutomatic,
       car.engine
     );
-    setCar({
-      brand: "",
-      model: "",
-      year: 1990,
-      maxSpeed: 0,
-      numberOfDoors: 0,
-      isAutomatic: isAutomatic,
-      engine: "",
-    });
+    if (id) {
+      editCarById(id, car);
+    } else {
+      setCar({
+        brand: "",
+        model: "",
+        year: "",
+        maxSpeed: 0,
+        isAutomatic: isAutomatic,
+        engine: "",
+        numberOfDoors: 0,
+      });
+    }
   };
   return (
     <div>

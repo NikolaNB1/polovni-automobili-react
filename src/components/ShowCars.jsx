@@ -1,9 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CarsContext from "../storage/CarsContext";
+import { deleteCarById, getCars } from "../service/carService";
 
 const ShowCars = () => {
-  const { cars } = useContext(CarsContext);
+  const { cars, updateCar } = useContext(CarsContext);
+
+  useEffect(() => {
+    getCars().then(({ data }) => updateCar(data));
+  }, []);
+
+  const handleDelete = (id) => {
+    const shouldDelete = window.confirm(
+      "Da li ste sigurni da želite obrisati automobil?"
+    );
+    if (shouldDelete) {
+      deleteCarById(id);
+      getCars().then(({ data }) => updateCar(data));
+    }
+  };
 
   return (
     <div>
@@ -22,6 +37,7 @@ const ShowCars = () => {
               <th>Engine</th>
               <th>No of doors</th>
               <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +52,21 @@ const ShowCars = () => {
                     <td>{car.engine}</td>
                     <td>{car.numberOfDoors}</td>
                     <td>
-                      <Link to={`edit/${car.id}`}>Edit</Link>
+                      <Link
+                        className="btn btn-outline-warning"
+                        to={`edit/${car.id}`}
+                      >
+                        Edit
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-outline-danger"
+                        type="delete"
+                        onClick={() => handleDelete(car.id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))

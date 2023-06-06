@@ -48,3 +48,7 @@ export const getCarById = (id) => {
 export const editCarById = (id, car) => {
   return API.patch(`/cars/${id}`, car);
 };
+
+export const deleteCarById = (id) => {
+  return API.delete(`/cars/${id}`);
+};

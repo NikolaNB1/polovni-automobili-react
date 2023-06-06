@@ -38,6 +38,7 @@ const ShowCars = () => {
               <th>No of doors</th>
               <th>Edit</th>
               <th>Delete</th>
+              <th>Show</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +68,14 @@ const ShowCars = () => {
                       >
                         Delete
                       </button>
+                    </td>
+                    <td>
+                      <Link
+                        className="btn btn-outline-success"
+                        to={`/cars/${car.id}`}
+                      >
+                        Show
+                      </Link>
                     </td>
                   </tr>
                 ))

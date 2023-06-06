@@ -1,6 +1,11 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addCar, editCarById, getCarById } from "../service/carService";
+import {
+  addCar,
+  editCarById,
+  getCarById,
+  getCars,
+} from "../service/carService";
 import UserContext from "../storage/UserContext";
 
 let years = [];
@@ -52,18 +57,19 @@ const AddCar = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(car);
-    addCar(
-      car.brand,
-      car.model,
-      car.year,
-      car.maxSpeed,
-      car.numberOfDoors,
-      isAutomatic,
-      car.engine
-    );
+
     if (id) {
       editCarById(id, car);
     } else {
+      addCar(
+        car.brand,
+        car.model,
+        car.year,
+        car.maxSpeed,
+        car.numberOfDoors,
+        isAutomatic,
+        car.engine
+      );
       setCar({
         brand: "",
         model: "",
@@ -199,13 +205,23 @@ const AddCar = () => {
           />
           <label>Number of doors</label>
         </div>
-        <button
-          className="w-100 btn btn-lg btn-success mt-3"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Add
-        </button>
+        {id ? (
+          <button
+            className="w-100 btn btn-lg btn-warning mt-3"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Edit
+          </button>
+        ) : (
+          <button
+            className="w-100 btn btn-lg btn-success mt-3"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Add
+          </button>
+        )}
         <p className="mt-5 mb-3 text-body-secondary">
           &copy; Vivify academy 2023
         </p>

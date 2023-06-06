@@ -1,22 +1,29 @@
 import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CarsContext from "../storage/CarsContext";
 import { deleteCarById, getCars } from "../service/carService";
+import UserContext from "../storage/UserContext";
 
 const ShowCars = () => {
   const { cars, updateCar } = useContext(CarsContext);
+  const { signedIn } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCars().then(({ data }) => updateCar(data));
   }, []);
 
   const handleDelete = (id) => {
-    const shouldDelete = window.confirm(
-      "Da li ste sigurni da želite obrisati automobil?"
-    );
-    if (shouldDelete) {
-      deleteCarById(id);
-      getCars().then(({ data }) => updateCar(data));
+    if (!signedIn) {
+      navigate("/signin");
+    } else {
+      const shouldDelete = window.confirm(
+        "Da li ste sigurni da želite obrisati automobil?"
+      );
+      if (shouldDelete) {
+        deleteCarById(id);
+        getCars().then(({ data }) => updateCar(data));
+      }
     }
   };
 
